@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Installer
+Bundle-SymbolicName: ca.rokc.ide4edu.installer; singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: ca.rokc.ide4edu.installer.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
