@@ -7,6 +7,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
 import ca.rokc.ide4edu.installer.Activator;
+import ca.rokc.ide4edu.installer.InstallerFeatures;
 import org.eclipse.jface.resource.ImageRegistry;
 
 public class InstallerShell {
@@ -14,9 +15,9 @@ public class InstallerShell {
 	private Shell shell;
 	public InstallerShell(Shell parent) {
 		// TODO Manage the lifecycle of the image.
-		//Image cdtImage = Activator.getImageDescriptor("icons/mycdt.png").createImage();
+		InstallerFeatures pack_data = new InstallerFeatures();
 		ImageRegistry imageRegistry = Activator.getDefault().getImageRegistry();
-		//Image cdtImage = imageRegistry.get(Activator.CDT_IMAGE);
+		
 		
 		shell = new Shell(parent);
 		shell.setLayout(new GridLayout(3, true));
