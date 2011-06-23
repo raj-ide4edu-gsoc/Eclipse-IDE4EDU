@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <package>
+ 	<name>cdt</name>
+ 	<title>C/C++</title>
+ 	<version>1.0.0</version>
+ 	<imagepath>mycdt.png</imagepath>
+ 	<description>This installs the CDT package of eclipse</description>
+ </package>

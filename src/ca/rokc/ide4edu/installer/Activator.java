@@ -12,6 +12,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.eclipse.swt.graphics.Image;
+import ca.rokc.ide4edu.installer.InstallerFeatures;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -71,79 +72,22 @@ public class Activator extends AbstractUIPlugin {
 	 * @param path the path
 	 * @return the image descriptor
 	 */
-	@Override
-    protected void initializeImageRegistry(ImageRegistry registry) {
-        super.initializeImageRegistry(registry);
+	public static void initializeImageRegistry(ImageRegistry registry, InstallerFeatures pack_Data) {
+		
         Bundle bundle = Platform.getBundle(PLUGIN_ID);
-        ImageDescriptor myImage = ImageDescriptor.createFromURL(
-              FileLocator.find(bundle,
-                               new Path("icons/mycdt.png"),
-                                        null));
-        registry.put(CDT_IMAGE, myImage);
-        ImageDescriptor myImage1 = ImageDescriptor.createFromURL(
-                FileLocator.find(bundle,
-                                 new Path("icons/Java_2.png"),
-                                          null));
-          registry.put(JAVA_IMAGE, myImage1);
-          ImageDescriptor myImage2 = ImageDescriptor.createFromURL(
-                  FileLocator.find(bundle,
-                                   new Path("icons/php.png"),
-                                            null));
-            registry.put(PHP_IMAGE, myImage2);
-            ImageDescriptor myImage3 = ImageDescriptor.createFromURL(
-                    FileLocator.find(bundle,
-                                     new Path("icons/Haskell_2.png"),
-                                              null));
-              registry.put(HASKELL_IMAGE, myImage3);
-              ImageDescriptor myImage4 = ImageDescriptor.createFromURL(
-                      FileLocator.find(bundle,
-                                       new Path("icons/python_2.gif"),
-                                                null));
-                registry.put(PYTHON_IMAGE, myImage4);
-                ImageDescriptor myImage5 = ImageDescriptor.createFromURL(
-                        FileLocator.find(bundle,
-                                         new Path("icons/sample.gif"),
-                                                  null));
-                  registry.put(DEFAULT_IMAGE, myImage5);
-                  
+        int index = pack_Data.package_name.size();
+	        for(int i=0;i<index;i++)
+	        {
+		        ImageDescriptor myImage = ImageDescriptor.createFromURL(
+		              FileLocator.find(bundle,
+		                               new Path("icons/"+pack_Data.image_path.get(i)),
+		                                        null));
+		        registry.put(pack_Data.package_name.get(i), myImage);
+	        }
     }
 
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
-	public static String getInstallName(int flag){
-			switch (flag) {
-			  case 0: 
-			    return("Install C/C++") ;
-			  case 1: 
-				  return("Install PHP") ;
-			  case 2: 
-				  return("Install Java") ;
-			  case 3: 
-				  return("Install Python") ;
-			  case 4: 
-				  return("Install Haskell") ;
-			  default: 
-				  return("UNKNOWN") ;
-			}
-			
-		}
-	public static Image getInstallImage(ImageRegistry imageRegistry, int flag){
-		switch (flag) {
-		  case 0: 
-		    return(imageRegistry.get(CDT_IMAGE)) ;
-		  case 1: 
-			  return(imageRegistry.get(PHP_IMAGE)) ;
-		  case 2: 
-			  return(imageRegistry.get(JAVA_IMAGE)) ;
-		  case 3: 
-			  return(imageRegistry.get(PYTHON_IMAGE)) ;
-		  case 4: 
-			  return(imageRegistry.get(HASKELL_IMAGE)) ;
-		  default: 
-			  return(imageRegistry.get(DEFAULT_IMAGE)) ;
-		}
-		
 	}
 	}
 
