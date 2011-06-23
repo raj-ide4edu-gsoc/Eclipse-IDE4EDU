@@ -23,12 +23,6 @@ public class Activator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "ca.rokc.ide4edu.installer"; //$NON-NLS-1$
 	
-	public static final String CDT_IMAGE = "CDT";
-	public static final String PHP_IMAGE = "PHP";
-	public static final String PYTHON_IMAGE = "PYTHON";
-	public static final String HASKELL_IMAGE = "HASKELL";
-	public static final String JAVA_IMAGE = "JAVA";
-	public static final String DEFAULT_IMAGE = "DEFAULT";
 	// The shared instance
 	private static Activator plugin;
 	
