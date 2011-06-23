@@ -13,6 +13,11 @@
             categoryId="ca.rokc.ide4edu.installer.commands.category"
             id="ca.rokc.ide4edu.installer.commands.sampleCommand">
       </command>
+      <command
+            defaultHandler="ca.rokc.ide4edu.installer.windowLauncherHandler"
+            id="ca.rokc.ide4edu.installer.windowLauncher"
+            name="name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">

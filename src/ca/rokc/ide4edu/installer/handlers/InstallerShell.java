@@ -33,20 +33,21 @@ public class InstallerShell {
 			pack_data.setPackageImage("python_2.gif");
 			Activator.initializeImageRegistry(trial_Registry, pack_data);
 		shell = new Shell(parent);
-		shell.setLayout(new GridLayout(3, true));
+		shell.setLayout(new GridLayout(1, true));
 		//shell.setLayout(null);
 		shell.setText("Install New Language");
 		shell.setBounds(100,100,600, 400);
 		GridData gridData = new GridData(GridData.FILL_BOTH);
 		gridData.widthHint = 200;
 		gridData.heightHint = 100;
-		gridData.grabExcessHorizontalSpace = true;
-		gridData.grabExcessVerticalSpace = true;
+		gridData.grabExcessHorizontalSpace = false;
+		gridData.grabExcessVerticalSpace = false;
 		for(int i=0;i<pack_data.package_name.size();i++){	
 			Button cdt = new Button(shell, SWT.PUSH);
 			cdt.setLayoutData(gridData);
 			cdt.setImage(trial_Registry.get(pack_data.package_name.get(i)));
 			cdt.setText("Install "+pack_data.title_name.get(i));
+			cdt.pack();
 			
 	}
 		shell.pack();
