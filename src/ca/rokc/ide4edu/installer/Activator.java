@@ -1,6 +1,7 @@
 package ca.rokc.ide4edu.installer;
 
 import java.net.URL;
+import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -13,6 +14,11 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.eclipse.swt.graphics.Image;
 import ca.rokc.ide4edu.installer.InstallerFeatures;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory; 
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -87,5 +93,54 @@ public class Activator extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+	public static void populateData(final List<InstallerFeatures> features){
+		//TODO Manage the XML handling and populate the list
+
+		try {
+			
+		     SAXParserFactory factory = SAXParserFactory.newInstance();
+		     SAXParser saxParser = factory.newSAXParser();
+		     final InstallerFeatures tempFeature = new InstallerFeatures();
+		     String tempVal="";
+		     DefaultHandler handler = new DefaultHandler() {
+		    	 
+		     public void startElement(String uri, String localName,
+		        String qName, Attributes attributes)
+		        throws SAXException {
+		        if (qName.equalsIgnoreCase("FEATURE")) {
+		         tempFeature.SetName(attributes.getValue("id"));
+		         tempFeature.SetTitle(attributes.getValue("name"));
+		         tempFeature.SetVersion(attributes.getValue("version"));
+		         tempFeature.SetImage(attributes.getValue("impath"));
+		        }
+		 
+		     }
+		 
+		     public void endElement(String uri, String localName,
+		          String qName)
+		          throws SAXException {
+		    	 if (qName.equalsIgnoreCase("FEATURE")){
+		    		 features.add(tempFeature);
+		    	 }
+		    	 if (qName.equalsIgnoreCase("DESCRIPTION")){
+		    		 tempFeature.SetDescription(tempVal);
+		    	 }
+		     }
+		 
+		     public void characters(char ch[], int start, int length)
+		         throws SAXException {
+		    	tempVal = String.valueOf(ch, start, length);
+		        }
+		 
+		      };
+		 
+		      saxParser.parse("c:\\file.xml", handler);
+		 
+			} 
+			catch(Exception e) {
+		      e.printStackTrace();
+		    }
+		
 	}
+}
 

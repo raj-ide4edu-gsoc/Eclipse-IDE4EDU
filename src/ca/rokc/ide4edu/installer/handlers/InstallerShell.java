@@ -1,5 +1,8 @@
 package ca.rokc.ide4edu.installer.handlers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
@@ -16,8 +19,11 @@ public class InstallerShell {
 		// TODO Manage the lifecycle of the image.
 		InstallerFeatures pack_data = new InstallerFeatures();
 		ImageRegistry trial_Registry = new ImageRegistry(Activator.getDefault().getWorkbench().getDisplay());
-			
-			Activator.initializeImageRegistry(trial_Registry, pack_data);
+		List<InstallerFeatures> addons_list = new ArrayList<InstallerFeatures>();
+		
+		Activator.initializeImageRegistry(trial_Registry, pack_data);
+		Activator.populateData(addons_list);
+		
 		shell = new Shell(parent);
 		shell.setLayout(new GridLayout(1, true));
 		//shell.setLayout(null);
