@@ -16,21 +16,7 @@ public class InstallerShell {
 		// TODO Manage the lifecycle of the image.
 		InstallerFeatures pack_data = new InstallerFeatures();
 		ImageRegistry trial_Registry = new ImageRegistry(Activator.getDefault().getWorkbench().getDisplay());
-			pack_data.setPackageName("cdt");
-			pack_data.setPackageTitle("C/C++");
-			pack_data.setPackageImage("mycdt.png");
-			pack_data.setPackageName("php");
-			pack_data.setPackageTitle("PHP");
-			pack_data.setPackageImage("php.png");
-			pack_data.setPackageName("java");
-			pack_data.setPackageTitle("Java");
-			pack_data.setPackageImage("Java_2.png");
-			pack_data.setPackageName("haskell");
-			pack_data.setPackageTitle("Haskell");
-			pack_data.setPackageImage("Haskell_2.png");
-			pack_data.setPackageName("python");
-			pack_data.setPackageTitle("Python");
-			pack_data.setPackageImage("python_2.gif");
+			
 			Activator.initializeImageRegistry(trial_Registry, pack_data);
 		shell = new Shell(parent);
 		shell.setLayout(new GridLayout(1, true));
@@ -42,11 +28,11 @@ public class InstallerShell {
 		gridData.heightHint = 100;
 		gridData.grabExcessHorizontalSpace = false;
 		gridData.grabExcessVerticalSpace = false;
-		for(int i=0;i<pack_data.package_name.size();i++){	
+		for(int i=0;i<1/*write the list iterator here*/;i++){	
 			Button cdt = new Button(shell, SWT.PUSH);
 			cdt.setLayoutData(gridData);
-			cdt.setImage(trial_Registry.get(pack_data.package_name.get(i)));
-			cdt.setText("Install "+pack_data.title_name.get(i));
+			cdt.setImage(trial_Registry.get(pack_data.package_name));
+			cdt.setText("Install "+pack_data.title_name);
 			cdt.pack();
 			
 	}

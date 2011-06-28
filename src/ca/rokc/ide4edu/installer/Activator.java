@@ -67,16 +67,20 @@ public class Activator extends AbstractUIPlugin {
 	 * @return the image descriptor
 	 */
 	public static void initializeImageRegistry(ImageRegistry registry, InstallerFeatures pack_Data) {
-		
+		/*
+		 * The initialize ImageRegistry code is handled here.
+		 * If the data and the images are being obtained from an URL
+		 * this code is unreachable and need to be disposed
+		 */
         Bundle bundle = Platform.getBundle(PLUGIN_ID);
-        int index = pack_Data.package_name.size();
-	        for(int i=0;i<index;i++)
+
+	        for(int i=0;i<1/*Write the list iterator here*/;i++)
 	        {
 		        ImageDescriptor myImage = ImageDescriptor.createFromURL(
 		              FileLocator.find(bundle,
-		                               new Path("icons/"+pack_Data.image_path.get(i)),
+		                               new Path("icons/"+pack_Data.image_path),
 		                                        null));
-		        registry.put(pack_Data.package_name.get(i), myImage);
+		        registry.put(pack_Data.package_name, myImage);
 	        }
     }
 
