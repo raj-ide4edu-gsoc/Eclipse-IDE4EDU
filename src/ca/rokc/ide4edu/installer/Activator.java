@@ -20,7 +20,7 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * The activator class controls the plug-in life cycle
  */
-//@SuppressWarnings("unused")
+// @SuppressWarnings("unused")
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
@@ -33,7 +33,7 @@ public class Activator extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public Activator() {
-	
+
 	}
 
 	/*
@@ -79,7 +79,7 @@ public class Activator extends AbstractUIPlugin {
 	 * @return the image descriptor
 	 */
 	public static void initializeImageRegistry(ImageRegistry registry,
-			InstallerFeature pack_Data) {
+			List<InstallerFeature> pack_Data) {
 		/*
 		 * The initialize ImageRegistry code is handled here. If the data and
 		 * the images are being obtained from an URL this code is unreachable
@@ -87,11 +87,11 @@ public class Activator extends AbstractUIPlugin {
 		 */
 		Bundle bundle = Platform.getBundle(PLUGIN_ID);
 
-		for (int i = 0; i < 1/* Write the list iterator here */; i++) {
-			ImageDescriptor myImage = ImageDescriptor.createFromURL(FileLocator
-					.find(bundle, new Path("icons/" + pack_Data.imagePath),
-							null));
-			registry.put(pack_Data.packageName, myImage);
+		for (InstallerFeature feature : pack_Data) {
+			ImageDescriptor myImage = ImageDescriptor
+					.createFromURL(FileLocator.find(bundle, new Path("icons/"
+							+ feature.imagePath), null));
+			registry.put(feature.packageName, myImage);
 		}
 	}
 
@@ -152,9 +152,10 @@ public class Activator extends AbstractUIPlugin {
 		}
 
 	}
-	public static BundleContext getContext(){
+
+	public static BundleContext getContext() {
 		return context;
-		
+
 	}
 
 }
