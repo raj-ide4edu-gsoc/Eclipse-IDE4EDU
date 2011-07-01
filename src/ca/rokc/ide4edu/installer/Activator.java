@@ -25,7 +25,7 @@ public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "ca.rokc.ide4edu.installer"; //$NON-NLS-1$
-
+	public static BundleContext context;
 	// The shared instance
 	private static Activator plugin;
 
@@ -33,6 +33,7 @@ public class Activator extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public Activator() {
+	
 	}
 
 	/*
@@ -56,6 +57,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
+		Activator.context = context;
 		super.stop(context);
 	}
 
@@ -150,4 +152,9 @@ public class Activator extends AbstractUIPlugin {
 		}
 
 	}
+	public static BundleContext getContext(){
+		return context;
+		
+	}
+
 }

@@ -16,7 +16,11 @@
       <command
             defaultHandler="ca.rokc.ide4edu.installer.windowLauncherHandler"
             id="ca.rokc.ide4edu.installer.windowLauncher"
-            name="name">
+            name="windowLauncher">
+      </command>
+      <command
+            id="ca.rokc.ide4edu.installer.installerWizard"
+            name="InstallerWizard">
       </command>
    </extension>
    <extension
@@ -24,6 +28,10 @@
       <handler
             commandId="ca.rokc.ide4edu.installer.commands.sampleCommand"
             class="ca.rokc.ide4edu.installer.handlers.InstallerHandler">
+      </handler>
+      <handler
+            class="ca.rokc.ide4edu.installer.handlers.InstallerWizard"
+            commandId="ca.rokc.ide4edu.installer.installerWizard">
       </handler>
    </extension>
    <extension
