@@ -27,6 +27,8 @@ import ca.rokc.ide4edu.installer.Activator;
 
 public class InstallerWizard extends AbstractHandler {
 
+	private IProvisioningAgent agent;
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Job job = null;
@@ -40,18 +42,16 @@ public class InstallerWizard extends AbstractHandler {
 
 		agentProvider = (IProvisioningAgentProvider) Activator.context
 				.getService(sr);
-		IProvisioningAgent agent = null;
 		try {
 			agent = agentProvider.createAgent(new URI(
 					"file:/Applications/eclipse36/p2"));
-		} catch (ProvisionException e1) {
+		} catch (ProvisionException e2) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (URISyntaxException e1) {
+			e2.printStackTrace();
+		} catch (URISyntaxException e2) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e2.printStackTrace();
 		}
-
 		// get the repository managers and define our repositories
 		IMetadataRepositoryManager manager = (IMetadataRepositoryManager) agent
 				.getService(IMetadataRepositoryManager.SERVICE_NAME);
@@ -99,7 +99,7 @@ public class InstallerWizard extends AbstractHandler {
 					.getProvisioningJob(new NullProgressMonitor());
 			job.addJobChangeListener(new JobChangeAdapter() {
 				public void done(IJobChangeEvent event) {
-					boolean close = agent.close();
+					agent.stop();
 				}
 			});
 
