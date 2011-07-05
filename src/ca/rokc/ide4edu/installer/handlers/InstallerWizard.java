@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.IProvisioningAgentProvider;
 import org.eclipse.equinox.p2.core.ProvisionException;
+import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.operations.InstallOperation;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.query.QueryUtil;
@@ -37,35 +38,33 @@ public class InstallerWizard extends AbstractHandler {
 				.getServiceReference(IProvisioningAgentProvider.SERVICE_NAME);
 		IProvisioningAgentProvider agentProvider = null;
 		if (sr == null)
-
 			return agentProvider;
 
 		agentProvider = (IProvisioningAgentProvider) Activator.context
 				.getService(sr);
-		try {
-			agent = agentProvider.createAgent(new URI(
-					"file:/Applications/eclipse36/p2"));
-		} catch (ProvisionException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} catch (URISyntaxException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+		/*
+		 * try { agent = agentProvider.createAgent(null); } catch
+		 * (ProvisionException e2) { // TODO Auto-generated catch block
+		 * e2.printStackTrace(); }
+		 */
+
+		agent = (IProvisioningAgent) Activator.context.getService(sr);
+
 		// get the repository managers and define our repositories
 		IMetadataRepositoryManager manager = (IMetadataRepositoryManager) agent
 				.getService(IMetadataRepositoryManager.SERVICE_NAME);
 		IArtifactRepositoryManager artifactManager = (IArtifactRepositoryManager) agent
 				.getService(IArtifactRepositoryManager.SERVICE_NAME);
 		try {
-			manager.addRepository(new URI("file:/Users/Pascal/tmp/demo/"));
+			manager.addRepository(new URI(
+					"http://download.eclipse.org/releases/helios"));
 		} catch (URISyntaxException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
 			artifactManager.addRepository(new URI(
-					"file:/Users/Pascal/tmp/demo/"));
+					"http://download.eclipse.org/releases/helios"));
 		} catch (URISyntaxException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -75,7 +74,8 @@ public class InstallerWizard extends AbstractHandler {
 		IMetadataRepository metadataRepo = null;
 		try {
 			metadataRepo = manager.loadRepository(new URI(
-					"file:/Users/Pascal/tmp/demo/"), new NullProgressMonitor());
+					"http://download.eclipse.org/releases/helios"),
+					new NullProgressMonitor());
 		} catch (ProvisionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -86,11 +86,9 @@ public class InstallerWizard extends AbstractHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Collection toInstall = metadataRepo
-				.query(QueryUtil
-						.createIUQuery("org.eclipse.equinox.p2.demo.feature.group"),
-						new NullProgressMonitor()).toUnmodifiableSet();
-
+		Collection<IInstallableUnit> toInstall = metadataRepo.query(
+				QueryUtil.createIUQuery("org.eclipse.cdt.feature.group"),
+				new NullProgressMonitor()).toUnmodifiableSet();
 		// Creating an operation
 		InstallOperation installOperation = new InstallOperation(
 				new ProvisioningSession(agent), toInstall);
