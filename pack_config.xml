@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
- <package>
- 	<name>cdt</name>
- 	<title>C/C++</title>
- 	<version>1.0.0</version>
- 	<imagepath>mycdt.png</imagepath>
- 	<description>This installs the CDT package of eclipse</description>
- </package>
+<features>
+	<feature id = "cdt" name = "CDT" version = "8.0.0" impath = "mycdt.png">
+		<description>Garbage Garbage</description>
+	</feature>
+	<feature id = "haskell" name = "Haskell" version = "1.2.3" impath = "Haskell_2.png">
+		<description>Garbage Garbage</description>
+	</feature>
+	<feature id = "php" name ="PHP" version = "1.2.3" impath = "php.png">
+		<description>Garbage Garbage</description>
+	</feature>
+	<feature id = "java" name = "Java" version = "1.2.3" impath = "Java_2.png">
+		<description>Garbage Garbage</description>
+	</feature>
+	<feature id = "python" name = "Python" version = "1.2.3" impath = "python_2.gif">
+		<description>Garbage Garbage</description>
+	</feature>
+</features>

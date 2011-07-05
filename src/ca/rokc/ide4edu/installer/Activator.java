@@ -145,7 +145,7 @@ public class Activator extends AbstractUIPlugin {
 
 			};
 
-			saxParser.parse("c:\\file.xml", handler);
+			saxParser.parse("/pack_config.xml", handler);
 
 		} catch (Exception e) {
 			e.printStackTrace();
