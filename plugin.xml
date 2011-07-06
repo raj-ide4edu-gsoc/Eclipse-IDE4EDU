@@ -14,6 +14,7 @@
             id="ca.rokc.ide4edu.installer.commands.sampleCommand">
       </command>
       <command
+            categoryId="ca.rokc.ide4edu.installer.commands.category"
             defaultHandler="ca.rokc.ide4edu.installer.windowLauncherHandler"
             id="ca.rokc.ide4edu.installer.windowLauncher"
             name="windowLauncher">

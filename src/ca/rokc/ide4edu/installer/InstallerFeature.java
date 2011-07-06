@@ -10,30 +10,55 @@ package ca.rokc.ide4edu.installer;
 // @SuppressWarnings("unused")
 public class InstallerFeature {
 
-	public String packageName;
-	public String titleName;
-	public String versonNumber;
-	public String imagePath;
-	public String descriptionContent;
+	private String packageName;
+	private String titleName;
+	private String versonNumber;
+	private String imagePath;
+	private String descriptionContent;
+	
+	public InstallerFeature (){
+		
+	};
 
-	public void setName(String pname) {
-		this.packageName = pname;
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
 	}
 
-	public void setTitle(String ptitle) {
-		this.titleName = ptitle;
+	public String getPackageName() {
+		return packageName;
 	}
 
-	public void setVersion(String version) {
-		this.versonNumber = version;
+	public void setTitleName(String titleName) {
+		System.out.println("Code is being called here");
+		this.titleName = titleName;
 	}
 
-	public void setImage(String impath) {
-		this.imagePath = impath;
+	public String getTitleName() {
+		return titleName;
 	}
 
-	public void setDescription(String desc) {
-		this.descriptionContent = desc;
+	public void setVersonNumber(String versonNumber) {
+		this.versonNumber = versonNumber;
+	}
+
+	public String getVersonNumber() {
+		return versonNumber;
+	}
+
+	public void setDescriptionContent(String descriptionContent) {
+		this.descriptionContent = descriptionContent;
+	}
+
+	public String getDescriptionContent() {
+		return descriptionContent;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getImagePath() {
+		return imagePath;
 	}
 
 }

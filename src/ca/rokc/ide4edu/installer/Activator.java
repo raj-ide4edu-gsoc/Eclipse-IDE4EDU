@@ -90,8 +90,8 @@ public class Activator extends AbstractUIPlugin {
 		for (InstallerFeature feature : pack_Data) {
 			ImageDescriptor myImage = ImageDescriptor
 					.createFromURL(FileLocator.find(bundle, new Path("icons/"
-							+ feature.imagePath), null));
-			registry.put(feature.packageName, myImage);
+							+ feature.getImagePath()), null));
+			registry.put(feature.getPackageName(), myImage);
 		}
 	}
 
@@ -110,17 +110,23 @@ public class Activator extends AbstractUIPlugin {
 			DefaultHandler handler = new DefaultHandler() {
 				private InstallerFeature tempFeature;
 				private StringBuilder description;
-
+				
 				public void startElement(String uri, String localName,
 						String qName, Attributes attributes)
 						throws SAXException {
 					if (qName.equalsIgnoreCase("FEATURE")) {
-						tempFeature.setName(attributes.getValue("id"));
-						tempFeature.setTitle(attributes.getValue("name"));
-						tempFeature.setVersion(attributes.getValue("version"));
-						tempFeature.setImage(attributes.getValue("impath"));
+						tempFeature = new InstallerFeature();
+						String test = attributes.getValue("id");
+						System.out.println(test);
+						tempFeature.setPackageName(attributes.getValue("id"));
+						tempFeature.setTitleName(attributes.getValue("name"));
+						System.out.println(tempFeature.getTitleName());
+						tempFeature.setVersonNumber(attributes.getValue("version"));
+						tempFeature.setImagePath(attributes.getValue("impath"));
 					} else if (qName.equalsIgnoreCase("DESCRIPTION")) {
 						description = new StringBuilder();
+						System.out.println("The code is being called till here");
+						
 					}
 
 				}
@@ -128,12 +134,15 @@ public class Activator extends AbstractUIPlugin {
 				public void endElement(String uri, String localName,
 						String qName) throws SAXException {
 					if (qName.equalsIgnoreCase("FEATURE")) {
+						
 						features.add(tempFeature);
+						
 						tempFeature = null;
+						System.out.println("The code is being called till here");
 					}
-					if (qName.equalsIgnoreCase("DESCRIPTION")) {
-						tempFeature.setDescription(description.toString());
-					}
+					/*if (qName.equalsIgnoreCase("DESCRIPTION")) {
+						tempFeature.setDescriptionContent(description.toString());
+					}*/
 				}
 
 				public void characters(char ch[], int start, int length)
@@ -145,7 +154,7 @@ public class Activator extends AbstractUIPlugin {
 
 			};
 
-			saxParser.parse("/pack_config.xml", handler);
+			saxParser.parse("packConfig.xml", handler);
 
 		} catch (Exception e) {
 			e.printStackTrace();
