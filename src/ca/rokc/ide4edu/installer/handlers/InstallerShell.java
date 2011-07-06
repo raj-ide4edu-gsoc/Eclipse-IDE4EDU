@@ -51,7 +51,10 @@ public class InstallerShell {
 					IHandlerService handlerService = (IHandlerService) window.getService(IHandlerService.class);
 					try {
 						handlerService.executeCommand("ca.rokc.ide4edu.installer.windowLauncher", null);
+	
+
 					} catch (Exception ex) {
+						ex.printStackTrace();
 						throw new RuntimeException("ca.rokc.ide4edu.installer.windowLauncher not found");
 					}
 

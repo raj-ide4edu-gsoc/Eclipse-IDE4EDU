@@ -29,7 +29,6 @@ public class InstallerFeature {
 	}
 
 	public void setTitleName(String titleName) {
-		System.out.println("Code is being called here");
 		this.titleName = titleName;
 	}
 

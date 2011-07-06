@@ -34,13 +34,13 @@ public class InstallerWizard extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Job job = null;
 		// get the agent
-		ServiceReference sr = Activator.context
+		ServiceReference sr = Activator.getContext()
 				.getServiceReference(IProvisioningAgentProvider.SERVICE_NAME);
 		IProvisioningAgentProvider agentProvider = null;
 		if (sr == null)
 			return agentProvider;
 
-		agentProvider = (IProvisioningAgentProvider) Activator.context
+		agentProvider = (IProvisioningAgentProvider) Activator.getContext()
 				.getService(sr);
 		/*
 		 * try { agent = agentProvider.createAgent(null); } catch
@@ -48,7 +48,7 @@ public class InstallerWizard extends AbstractHandler {
 		 * e2.printStackTrace(); }
 		 */
 
-		agent = (IProvisioningAgent) Activator.context.getService(sr);
+		agent = (IProvisioningAgent) Activator.getContext().getService(sr);
 
 		// get the repository managers and define our repositories
 		IMetadataRepositoryManager manager = (IMetadataRepositoryManager) agent

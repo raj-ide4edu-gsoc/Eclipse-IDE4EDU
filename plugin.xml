@@ -20,6 +20,7 @@
             name="windowLauncher">
       </command>
       <command
+            defaultHandler="ca.rokc.ide4edu.installer.handlers.InstallerWizard"
             id="ca.rokc.ide4edu.installer.installerWizard"
             name="InstallerWizard">
       </command>

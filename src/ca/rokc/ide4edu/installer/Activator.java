@@ -1,5 +1,7 @@
 package ca.rokc.ide4edu.installer;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
@@ -25,7 +27,7 @@ public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "ca.rokc.ide4edu.installer"; //$NON-NLS-1$
-	public static BundleContext context;
+	private static BundleContext context;
 	// The shared instance
 	private static Activator plugin;
 
@@ -46,6 +48,7 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		Activator.context = context;
 	}
 
 	/*
@@ -116,16 +119,12 @@ public class Activator extends AbstractUIPlugin {
 						throws SAXException {
 					if (qName.equalsIgnoreCase("FEATURE")) {
 						tempFeature = new InstallerFeature();
-						String test = attributes.getValue("id");
-						System.out.println(test);
 						tempFeature.setPackageName(attributes.getValue("id"));
 						tempFeature.setTitleName(attributes.getValue("name"));
-						System.out.println(tempFeature.getTitleName());
 						tempFeature.setVersonNumber(attributes.getValue("version"));
 						tempFeature.setImagePath(attributes.getValue("impath"));
 					} else if (qName.equalsIgnoreCase("DESCRIPTION")) {
 						description = new StringBuilder();
-						System.out.println("The code is being called till here");
 						
 					}
 
@@ -138,11 +137,10 @@ public class Activator extends AbstractUIPlugin {
 						features.add(tempFeature);
 						
 						tempFeature = null;
-						System.out.println("The code is being called till here");
 					}
-					/*if (qName.equalsIgnoreCase("DESCRIPTION")) {
+					if (qName.equalsIgnoreCase("DESCRIPTION")) {
 						tempFeature.setDescriptionContent(description.toString());
-					}*/
+					}
 				}
 
 				public void characters(char ch[], int start, int length)
@@ -153,8 +151,9 @@ public class Activator extends AbstractUIPlugin {
 				}
 
 			};
-
-			saxParser.parse("packConfig.xml", handler);
+			URL data = FileLocator.find(Platform.getBundle(PLUGIN_ID),new Path ("/icons/packConfig.xml"), null);
+			InputStream file = data.openStream();
+			saxParser.parse(file, handler);
 
 		} catch (Exception e) {
 			e.printStackTrace();
