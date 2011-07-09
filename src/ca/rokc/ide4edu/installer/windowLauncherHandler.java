@@ -12,7 +12,6 @@ import org.eclipse.ui.PlatformUI;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -50,6 +49,7 @@ public class windowLauncherHandler implements IHandler {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// TODO Auto-generated method stub
@@ -65,6 +65,7 @@ public class windowLauncherHandler implements IHandler {
 		Job job = null;
 
 		// get the agent
+		@SuppressWarnings("rawtypes")
 		ServiceReference sr = Activator.getContext().getServiceReference(
 				IProvisioningAgentProvider.SERVICE_NAME);
 		IProvisioningAgentProvider agentProvider = null;
@@ -80,7 +81,6 @@ public class windowLauncherHandler implements IHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// agent = (IProvisioningAgent) Activator.getContext().getService(sr);
 		if (agent == null) {
 			System.out.println("Agent has never been created");
 		}
@@ -91,13 +91,13 @@ public class windowLauncherHandler implements IHandler {
 				.getService(IArtifactRepositoryManager.SERVICE_NAME);
 		try {
 			manager.addRepository(new URI(
-					"http://download.eclipse.org/releases/helios"));
+					"http://download.eclipse.org/releases/indigo"));
 		} catch (URISyntaxException e1) { // TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
 			artifactManager.addRepository(new URI(
-					"http://download.eclipse.org/releases/helios"));
+					"http://download.eclipse.org/releases/indigo"));
 		} catch (URISyntaxException e1) { // TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -106,7 +106,7 @@ public class windowLauncherHandler implements IHandler {
 		try {
 			System.out.println("The execution of the installation has beguin");
 			metadataRepo = manager.loadRepository(new URI(
-					"http://download.eclipse.org/releases/helios"),
+					"http://download.eclipse.org/releases/indigo"),
 					new NullProgressMonitor());
 		} catch (ProvisionException e) {
 			// TODO Auto-generated catch block
@@ -118,35 +118,36 @@ public class windowLauncherHandler implements IHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("The execution of the installation has beguin");
+		shell.setText("The execution of the installation has beguin");
 
 		Collection<IInstallableUnit> toInstall = metadataRepo.query(
 				QueryUtil.createIUQuery("org.eclipse.cdt.feature.group"),
 				new NullProgressMonitor()).toUnmodifiableSet();
-		System.out.println("The Size of the installation units is "
+		shell.setText("The Size of the installation units is "
 				+ toInstall.size());
 		InstallOperation installOperation = new InstallOperation(
 				new ProvisioningSession(agent), toInstall);
+		shell.setText("It ran till here");
 		for (IInstallableUnit test : toInstall) {
-			System.out.println(test.getId());
+			System.out.println(test.toString());
 		}
 		if (installOperation.resolveModal(new NullProgressMonitor()).isOK()) {
-			System.out.println("Job is being added");
+			shell.setText("Job is being added");
 			job = installOperation
 					.getProvisioningJob(new NullProgressMonitor());
 			job.addJobChangeListener(new JobChangeAdapter() {
 				public void done(IJobChangeEvent event) {
-					// agent.stop();
+					 agent.stop();
 				}
 			});
 
 		}
 		if (job != null) {
-			System.out.println("Job is being scheduled");
+			shell.setText("Job is being scheduled");
 			job.schedule();
 		}
 
-		System.out.println("Job is not being scheduled");
+		shell.setText("Job is not being scheduled");
 		shell.open();
 
 		return null;
