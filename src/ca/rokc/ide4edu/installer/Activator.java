@@ -152,15 +152,15 @@ public class Activator extends AbstractUIPlugin {
 				}
 
 			};
-			/*URL url = null;
+			URL url = null;
 			url = new URL("http://www.eclipse.org/ide4edu/install/catalog.xml");
 			URLConnection connection = url.openConnection();
 			InputStream filetest = connection.getInputStream();
-			saxParser.parse(filetest,handler);*/
-			URL data = FileLocator.find(Platform.getBundle(PLUGIN_ID),new Path ("/icons/packConfig.xml"), null);
+			saxParser.parse(filetest,handler);
+			/*URL data = FileLocator.find(Platform.getBundle(PLUGIN_ID),new Path ("/icons/packConfig.xml"), null);
 			InputStream file = data.openStream();
 			saxParser.parse(file, handler);
-		
+		*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
