@@ -32,6 +32,7 @@ import org.osgi.framework.ServiceReference;
 
 import ca.rokc.ide4edu.installer.Activator;
 
+@SuppressWarnings("unused")
 public class windowLauncherHandler implements IHandler {
 
 	private IProvisioningAgent agent;
@@ -49,7 +50,6 @@ public class windowLauncherHandler implements IHandler {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// TODO Auto-generated method stub
@@ -62,10 +62,12 @@ public class windowLauncherHandler implements IHandler {
 		final Label label = new Label(shell, SWT.PUSH);
 		label.setBounds(120, 20, 30, 30);
 
-		Job job = null;
-
+		//Job job = null;
+		
 		// get the agent
-		@SuppressWarnings("rawtypes")
+		/*
+		 * @SuppressWarnings("rawtypes")
+		 
 		ServiceReference sr = Activator.getContext().getServiceReference(
 				IProvisioningAgentProvider.SERVICE_NAME);
 		IProvisioningAgentProvider agentProvider = null;
@@ -146,8 +148,8 @@ public class windowLauncherHandler implements IHandler {
 			shell.setText("Job is being scheduled");
 			job.schedule();
 		}
-
-		shell.setText("Job is not being scheduled");
+	*/
+		//shell.setText("Job is not being scheduled");
 		shell.open();
 
 		return null;
