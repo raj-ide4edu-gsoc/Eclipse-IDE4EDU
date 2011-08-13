@@ -4,10 +4,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.Properties;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -31,6 +35,7 @@ public class Activator extends AbstractUIPlugin {
 	private static BundleContext context;
 	// The shared instance
 	private static Activator plugin;
+	private static Shell welcome;
 
 	/**
 	 * The constructor
@@ -152,17 +157,31 @@ public class Activator extends AbstractUIPlugin {
 				}
 
 			};
+			welcome = new Shell();
+			welcome.open();
+			welcome.setBounds(100, 100, 400, 300);
 			URL url = null;
+			Properties properties = System.getProperties();
+			properties.put("http.proxyHost", "172.16.25.25");
+			properties.put("http.proxyPort", "8080");
 			url = new URL("http://www.eclipse.org/ide4edu/install/catalog.xml");
 			URLConnection connection = url.openConnection();
 			InputStream filetest = connection.getInputStream();
 			saxParser.parse(filetest,handler);
+			welcome.close();
 			/*URL data = FileLocator.find(Platform.getBundle(PLUGIN_ID),new Path ("/icons/packConfig.xml"), null);
 			InputStream file = data.openStream();
 			saxParser.parse(file, handler);
 		*/
 		} catch (Exception e) {
+			welcome.close();
+			Shell error = new Shell();
+			error.setBounds(200, 200, 600, 400);
+			Label label = new Label(error, SWT.PUSH);
+			label.setBounds(220, 120, 400, 300);
+			label.setText(e.getMessage());
 			e.printStackTrace();
+			error.open();
 		}
 
 	}
