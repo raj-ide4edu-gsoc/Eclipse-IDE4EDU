@@ -20,7 +20,6 @@ import org.eclipse.equinox.p2.query.QueryUtil;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepository;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
-import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -46,9 +45,6 @@ public class InstallerShell {
 	private Shell shell;
 	private IProvisioningAgent agent;
 	IProgressMonitor monitor;
-
-	final ImageRegistry trial_Registry = new ImageRegistry(Activator.getDefault()
-			.getWorkbench().getDisplay());
 
 	public InstallerShell(Shell parent) {
 		
@@ -130,8 +126,10 @@ public class InstallerShell {
 						 * The issue is being that the installation job is being created but never triggered
 						 * */
 						installButton.addSelectionListener(new SelectionAdapter(){
+							@SuppressWarnings("unchecked")
 							public void widgetSelected(SelectionEvent e){
 								// get the agent
+								@SuppressWarnings("rawtypes")
 								ServiceReference sr = Activator.getContext().getServiceReference(
 										IProvisioningAgentProvider.SERVICE_NAME);
 								IProvisioningAgentProvider agentProvider = null;
@@ -183,6 +181,7 @@ public class InstallerShell {
 								 * To ensure the correctness of the query, the package name used
 								 * should be as accurate as the one used in actual terms
 								 * */
+								@SuppressWarnings("unused")
 								Collection<IInstallableUnit> toInstall = metadataRepo.query(
 										QueryUtil.createIUQuery("org.eclipse."+feature.getPackageName()+".feature.group"),
 										new NullProgressMonitor()).toUnmodifiableSet();
@@ -216,11 +215,6 @@ public class InstallerShell {
 
 		}
 		shell.pack();
-		/*
-		 * The registry created in this shell is disposed after packing. Is this
-		 * method correct?
-		 */
-		
 	}
 	private Image getImageForFeature(Device device, InstallerFeature feature) {
 		InputStream in = null;
@@ -244,7 +238,6 @@ public class InstallerShell {
 	}
 	
 	public void open() {
-		trial_Registry.dispose();
 		shell.open();
 	}
 }
