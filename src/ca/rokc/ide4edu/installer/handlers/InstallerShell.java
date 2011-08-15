@@ -1,6 +1,8 @@
 package ca.rokc.ide4edu.installer.handlers;
 
 import java.awt.Label;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -24,6 +26,10 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -49,7 +55,6 @@ public class InstallerShell {
 		List<InstallerFeature> addons_list = new ArrayList<InstallerFeature>();
 
 			Activator.populateData(addons_list);
-		Activator.initializeImageRegistry(trial_Registry, addons_list);
 		shell = new Shell(parent);
 		shell.setLayout(new GridLayout(3, true));		
 		shell.setText("Install New Language");
@@ -62,7 +67,16 @@ public class InstallerShell {
 		for (final InstallerFeature feature : addons_list) {
 			Button selectionButton = new Button(shell, SWT.PUSH);
 			selectionButton.setLayoutData(gridData);
-			selectionButton.setImage(trial_Registry.get(feature.getPackageName()));
+			
+			final Image image = getImageForFeature(shell.getDisplay(), feature);
+			selectionButton.setImage(image);
+			selectionButton.addDisposeListener(new DisposeListener() {				
+				@Override
+				public void widgetDisposed(DisposeEvent e) {
+					image.dispose();
+				}
+			});
+			
 			selectionButton.setText("Install " + feature.getTitleName());
 			selectionButton.addSelectionListener(new SelectionAdapter() {
 				
@@ -208,6 +222,27 @@ public class InstallerShell {
 		 */
 		
 	}
+	private Image getImageForFeature(Device device, InstallerFeature feature) {
+		InputStream in = null;
+		try {
+			in = feature.getImagePath().openStream();
+			ImageData[] data = new ImageLoader().load(in);
+			return new Image(device, data[0]);
+		} catch (IOException e) {
+			// TODO return a default image.
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (in != null)
+				try {
+					in.close();
+				} catch (IOException e) {
+					// TODO Log this unlikely exception
+					e.printStackTrace();
+				}
+		}
+	}
+	
 	public void open() {
 		trial_Registry.dispose();
 		shell.open();

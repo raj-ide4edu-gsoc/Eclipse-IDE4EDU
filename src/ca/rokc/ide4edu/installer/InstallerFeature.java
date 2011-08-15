@@ -3,6 +3,8 @@
  */
 package ca.rokc.ide4edu.installer;
 
+import java.net.URL;
+
 /**
  * @author Rajendra
  * 
@@ -13,7 +15,7 @@ public class InstallerFeature {
 	private String packageName;
 	private String titleName;
 	private String versonNumber;
-	private String imagePath;
+	private URL imagePath;
 	private String descriptionContent;
 	
 	public InstallerFeature (){
@@ -52,11 +54,11 @@ public class InstallerFeature {
 		return descriptionContent;
 	}
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setImagePath(URL url) {
+		this.imagePath = url;
 	}
 
-	public String getImagePath() {
+	public URL getImagePath() {
 		return imagePath;
 	}
 

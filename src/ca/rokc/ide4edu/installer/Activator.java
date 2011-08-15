@@ -1,6 +1,7 @@
 package ca.rokc.ide4edu.installer;
 
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -79,39 +80,11 @@ public class Activator extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	/**
-	 * Returns an image descriptor for the image file at the given plug-in
-	 * relative path
-	 * 
-	 * @param path
-	 *            the path
-	 * @return the image descriptor
-	 */
-	public static void initializeImageRegistry(ImageRegistry registry,
-			List<InstallerFeature> pack_Data) {
-		/*
-		 * The initialize ImageRegistry code is handled here. If the data and
-		 * the images are being obtained from an URL this code is unreachable
-		 * and need to be disposed
-		 */
-		Bundle bundle = Platform.getBundle(PLUGIN_ID);
-
-		for (InstallerFeature feature : pack_Data) {
-			ImageDescriptor myImage = ImageDescriptor
-					.createFromURL(FileLocator.find(bundle, new Path("icons/"
-							+ feature.getImagePath()), null));
-			registry.put(feature.getPackageName(), myImage);
-		}
-	}
-
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
-
 	public static void populateData(final List<InstallerFeature> features) {
-		// TODO Manage the XML handling and populate the list
-
 		try {
+			
+			final URL rootUrl = new URL("http://www.eclipse.org/ide4edu/install/");
+			URL catalogUrl = new URL(rootUrl, "catalog.xml");
 
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
@@ -128,7 +101,12 @@ public class Activator extends AbstractUIPlugin {
 						tempFeature.setPackageName(attributes.getValue("id"));
 						tempFeature.setTitleName(attributes.getValue("name"));
 						tempFeature.setVersonNumber(attributes.getValue("version"));
-						tempFeature.setImagePath(attributes.getValue("impath"));
+						try {
+							tempFeature.setImagePath(new URL(rootUrl, attributes.getValue("impath")));
+						} catch (MalformedURLException e) {
+							// TODO Log this properly. 
+							e.printStackTrace();
+						}
 					} else if (qName.equalsIgnoreCase("DESCRIPTION")) {
 						description = new StringBuilder();
 						
@@ -165,8 +143,8 @@ public class Activator extends AbstractUIPlugin {
 			Properties properties = System.getProperties();
 			properties.put("http.proxyHost", "172.16.25.25");
 			properties.put("http.proxyPort", "8080");
-			*/url = new URL("http://www.eclipse.org/ide4edu/install/catalog.xml");
-			URLConnection connection = url.openConnection();
+			*/
+			URLConnection connection = catalogUrl.openConnection();
 			InputStream filetest = connection.getInputStream();
 			saxParser.parse(filetest,handler);
 			welcome.close();
