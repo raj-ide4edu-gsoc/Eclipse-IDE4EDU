@@ -161,10 +161,11 @@ public class Activator extends AbstractUIPlugin {
 			welcome.open();
 			welcome.setBounds(100, 100, 400, 300);
 			URL url = null;
+			/*
 			Properties properties = System.getProperties();
 			properties.put("http.proxyHost", "172.16.25.25");
 			properties.put("http.proxyPort", "8080");
-			url = new URL("http://www.eclipse.org/ide4edu/install/catalog.xml");
+			*/url = new URL("http://www.eclipse.org/ide4edu/install/catalog.xml");
 			URLConnection connection = url.openConnection();
 			InputStream filetest = connection.getInputStream();
 			saxParser.parse(filetest,handler);
