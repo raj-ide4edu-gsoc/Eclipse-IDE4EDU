@@ -9,37 +9,22 @@
             id="ca.rokc.ide4edu.installer.commands.category">
       </category>
       <command
-            name="Sample Command"
+            name="Install New Langugaes"
             categoryId="ca.rokc.ide4edu.installer.commands.category"
-            id="ca.rokc.ide4edu.installer.commands.sampleCommand">
-      </command>
-      <command
-            categoryId="ca.rokc.ide4edu.installer.commands.category"
-            defaultHandler="ca.rokc.ide4edu.installer.windowLauncherHandler"
-            id="ca.rokc.ide4edu.installer.windowLauncher"
-            name="windowLauncher">
-      </command>
-      <command
-            defaultHandler="ca.rokc.ide4edu.installer.handlers.InstallerWizard"
-            id="ca.rokc.ide4edu.installer.installerWizard"
-            name="InstallerWizard">
+            id="ca.rokc.ide4edu.installer.commands.languageInstaller">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            commandId="ca.rokc.ide4edu.installer.commands.sampleCommand"
+            commandId="ca.rokc.ide4edu.installer.commands.languageInstaller"
             class="ca.rokc.ide4edu.installer.handlers.InstallerHandler">
-      </handler>
-      <handler
-            class="ca.rokc.ide4edu.installer.handlers.InstallerWizard"
-            commandId="ca.rokc.ide4edu.installer.installerWizard">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="ca.rokc.ide4edu.installer.commands.sampleCommand"
+            commandId="ca.rokc.ide4edu.installer.commands.languageInstaller"
             contextId="org.eclipse.ui.contexts.window"
             sequence="M1+6"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
@@ -48,29 +33,12 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               label="Sample Menu"
-               mnemonic="M"
-               id="ca.rokc.ide4edu.installer.menus.sampleMenu">
-            <command
-                  commandId="ca.rokc.ide4edu.installer.commands.sampleCommand"
-                  mnemonic="S"
-                  id="ca.rokc.ide4edu.installer.menus.sampleCommand">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="ca.rokc.ide4edu.installer.toolbars.sampleToolbar">
-            <command
-                  commandId="ca.rokc.ide4edu.installer.commands.sampleCommand"
-                  icon="icons/sample.gif"
-                  tooltip="Say hello world"
-                  id="ca.rokc.ide4edu.installer.toolbars.sampleCommand">
-            </command>
-         </toolbar>
+            locationURI="menu:help?after=additions">
+         <command
+               commandId="ca.rokc.ide4edu.installer.commands.languageInstaller"
+               label="Install New Langugaes..."
+               style="push">
+         </command>
       </menuContribution>
    </extension>
 
